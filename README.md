@@ -13,7 +13,7 @@ Anotheruse case is to scan docker image for known vulnerabilities.
 The output of the tool could look like:
 
   ```
-  # docker-compliance cve --all --download --arf report-arf.xml
+  # docker-oscap cve --all --download --arf report-arf.xml
   Fetching OVAL definitions for RHSA ........ ok
   Inflating ....... ok
   Scanning rhel7-elasticsearch ...... ok (compliant, no CVE identified)
@@ -25,7 +25,7 @@ The output of the tool could look like:
 
 ## Copyright
 
-Copyright (c) 2014 Šimon Lukašík
+Copyright (c) 2014--2015 Šimon Lukašík
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
