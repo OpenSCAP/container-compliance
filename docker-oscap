@@ -23,7 +23,7 @@ function docker_mount_image(){
 	/usr/bin/docker save $image_name | tar x --directory $tmp
 	# layers now in the working directory
 	for layer in `find $tmp/* -maxdepth 1 -type d`; do
-		if tar tvf $layer/layer.tar | grep -q .; then
+		if tar tvf $layer/layer.tar | grep . > /dev/null; then
 			# TODO: layer ordering: can multiple layers contain data?
 			tar xf $layer/layer.tar --directory $target_dir
 		fi
