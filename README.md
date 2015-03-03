@@ -4,10 +4,32 @@ Resources and tools to assert compliance of containers (docker, rocker, ...).
 
 ## Scanning Docker image using OpenSCAP
 
-The very first use case is to run the offline scan of the container.
-The command-line arguments could mimics the oscap's like:
+The very first use case is to run the offline scan of the container image.
 
-  # docker-oscap container-name xccdf eval --profile containers mypolicy.sds.xml
+  ```
+  # docker-oscap [image_name] [oscap_arguments]
+  ```
+
+### Examplary usage
+
+Tested on Fedora host.
+
+  ```
+  # yum install scap-security-guide openscap-scanner docker-io
+  # service docker start
+  # docker pull fedora
+  # docker-oscap fedora xccdf eval \
+      --profile xccdf_org.ssgproject.content_profile_common \
+      /usr/share/xml/scap/ssg/fedora/ssg-fedora-ds.xml
+  ```
+
+## Future features
+
+### Scanning running container
+Similar to scanning image, just scanning the container. The result may differ
+(image vs containter) due to defined mount points.
+
+### Vulnerability scan of image
 
 Another use-case is to scan docker image for known vulnerabilities.
 The output of the tool could look like:
