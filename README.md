@@ -9,7 +9,7 @@ The command-line arguments could mimics the oscap's like:
 
   # docker-oscap container-name xccdf eval --profile containers mypolicy.sds.xml
 
-Anotheruse case is to scan docker image for known vulnerabilities.
+Another use-case is to scan docker image for known vulnerabilities.
 The output of the tool could look like:
 
   ```
