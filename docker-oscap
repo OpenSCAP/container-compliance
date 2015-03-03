@@ -43,7 +43,8 @@ function oscap_chroot(){
 	# Learn more at https://www.redhat.com/archives/open-scap-list/2013-July/msg00000.html
 	export OSCAP_PROBE_RPMDB_PATH="$path"
 	export OSCAP_PROBE_OS_NAME="Linux"
-	# todo: OSCAP_PROBE_OS_VERSION, OSCAP_PROBE_ARCHITECTURE ?
+	export OSCAP_PROBE_OS_VERSION=`uname --kernel-release`
+	export OSCAP_PROBE_ARCHITECTURE=`uname --hardware-platform`
 	export OSCAP_PROBE_PRIMARY_HOST_NAME="docker-image-$image"
 	/usr/bin/oscap $oscap_arguments
 }
