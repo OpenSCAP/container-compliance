@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# Copyright (c) 2014--2015 Šimon Lukašík
+#
+# This software is licensed to you under the GNU General Public License,
+# version 3 (GPLv3). There is NO WARRANTY for this software, express or
+# implied, including the implied warranties of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. You should have received a copy of GPLv3
+# along with this software; if not, see http://www.gnu.org/licenses/gpl.txt
+#
+
+set -x
+set -e
+image_name=$1; shift
+oscap_arguments="$@"
+
+function docker_mount_image(){
+	# -- 'docker mount' will be hopefully comming later to docker
+	local image_name=$1
+	local target_dir=$2
+	local tmp=`mktemp -d docker.XXXXXX`
+	# `docker mount` command is coming later
+	/usr/bin/docker save $image_name | tar x --directory $tmp
+	# layers now in the working directory
+	for layer in `find $tmp/* -maxdepth 1 -type d`; do
+		if tar tf $layer/layer.tar | grep -q .; then
+			# TODO: layer ordering: can multiple layers contain data?
+			tar xf $layer/layer.tar --directory $target_dir
+		fi
+	done
+	rm -r $tmp
+}
+
+image_root=`mktemp -d docker.XXXXXX`
+docker_mount_image $image_name $image_root
+echo $image_root
+
+# -- run the oscap in chroot
+# -- unmount the container
+
+# -- scan the container as well
+
