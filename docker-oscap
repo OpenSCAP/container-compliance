@@ -10,7 +10,7 @@
 #
 
 set -x
-set -e
+set -e -o pipefail
 image_name=$1; shift
 oscap_arguments="$@"
 
