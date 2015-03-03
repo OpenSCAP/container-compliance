@@ -16,6 +16,7 @@ Tested on Fedora host.
 
   ```
   # yum install scap-security-guide openscap-scanner docker-io
+  # sed -i 's/<platform idref=.*$//g' /usr/share/xml/scap/ssg/fedora/ssg-fedora-ds.xml
   # service docker start
   # docker pull fedora
   # docker-oscap fedora xccdf eval \
