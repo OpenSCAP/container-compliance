@@ -31,12 +31,24 @@ function docker_mount_image(){
 	rm -r $tmp
 }
 
+function docker_umount_image(){
+	rm -r $1
+}
+
+function oscap_chroot(){
+	local image=$1; shift
+	local path=$1; shift
+	local oscap_arguments="$@"
+
+	export OSCAP_PROBE_RPMDB_PATH="$path"
+	export OSCAP_PROBE_OS_NAME="Linux"
+	# todo: OSCAP_PROBE_OS_VERSION, OSCAP_PROBE_ARCHITECTURE ?
+	export OSCAP_PROBE_PRIMARY_HOST_NAME="docker-image-$image"
+	/usr/bin/oscap $oscap_arguments
+}
+
 image_root=`mktemp -d docker.XXXXXX`
+
 docker_mount_image $image_name $image_root
-echo $image_root
-
-# -- run the oscap in chroot
-# -- unmount the container
-
-# -- scan the container as well
-
+oscap_chroot $image_name $image_root $oscap_arguments
+docker_umount_image $image_root
