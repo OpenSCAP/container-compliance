@@ -1,6 +1,6 @@
 # Container Compliance
 
-Resources and tools to assert compliance of containers (docker, rocker, ...).
+Resources and tools to assert compliance of containers (docker, rocket, ...).
 
 ## Scanning Docker image using OpenSCAP
 
