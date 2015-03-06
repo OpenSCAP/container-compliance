@@ -15,11 +15,10 @@ image_name=$1; shift
 oscap_arguments="$@"
 
 function docker_mount_image(){
-	# -- 'docker mount' will be hopefully comming later to docker
 	local image_name=$1
 	local target_dir=$2
 	local tmp=`mktemp -d docker.XXXXXX`
-	# `docker mount` command is coming later
+	# -- 'docker mount' will be hopefully comming later to docker
 	/usr/bin/docker save $image_name | tar x --directory $tmp
 	# layers now in the working directory
 	for layer in `find $tmp/* -maxdepth 1 -type d`; do
