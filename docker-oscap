@@ -48,10 +48,6 @@ function oscap_chroot(){
 
 module=$1; shift
 case $module in
-*)
-	echo "docker-oscap image [image_name] oscap-arguments"
-	echo "	Scan a docker image. See man oscap to learn more about oscap-arguments"
-	;;
 image)
 	image_name=$1; shift
 	oscap_arguments="$@"
@@ -59,6 +55,10 @@ image)
 	docker_mount_image $image_name $image_root
 	oscap_chroot $image_name $image_root $oscap_arguments
 	docker_umount_image $image_root
+	;;
+*)
+	echo "docker-oscap image [image_name] oscap-arguments"
+	echo "	Scan a docker image. See man oscap to learn more about oscap-arguments"
 	;;
 esac
 
