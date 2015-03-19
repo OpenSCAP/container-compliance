@@ -2,13 +2,38 @@
 
 Resources and tools to assert compliance of containers (docker, rocket, ...).
 
+## Vulnerability scan of Docker image
+
+  ```
+  # docker-oscap image-cve IMAGE_NAME \
+      [--results OVAL.XML [--report REPORT.HTML]]
+  ```
+
+This command will attach docker image, determine OS variant/version, download CVE stream
+applicable to the given OS, and finally run vulnerability scan.
+
+### Examplary usage
+
+Tested on Fedora host.
+
+  ```
+  # yum install openscap-scanner docker-io
+  # service docker start
+  # docker pull richxsl/rhel7
+  # docker-oscap image-cve richxsl/rhel7 \
+      --results oval.xml --report rhel7.html
+  $ firefox rhel7.html
+  ```
+
 ## Scanning Docker image using OpenSCAP
 
-The very first use case is to run the offline scan of the container image.
+Run any OpenSCAP command within chroot of mounted docker image.
 
   ```
-  # docker-oscap image [image_name] [oscap_arguments]
+  # docker-oscap image IMAGE_NAME [OSCAP_ARGUMENTS]
   ```
+
+Learn more about OSCAP_ARGUMENTS in `man oscap`.
 
 ### Examplary usage
 
@@ -30,9 +55,8 @@ Tested on Fedora host.
 Similar to scanning image, just scanning the container. The result may differ
 (image vs containter) due to defined mount points.
 
-### Vulnerability scan of image
+### Vulnerability scan of all images
 
-Another use-case is to scan docker image for known vulnerabilities.
 The output of the tool could look like:
 
   ```
