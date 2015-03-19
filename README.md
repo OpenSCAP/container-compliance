@@ -12,7 +12,7 @@ Resources and tools to assert compliance of containers (docker, rocket, ...).
 This command will attach docker image, determine OS variant/version, download CVE stream
 applicable to the given OS, and finally run vulnerability scan.
 
-### Examplary usage
+### Exemplary usage
 
 Tested on Fedora host.
 
@@ -35,7 +35,7 @@ Run any OpenSCAP command within chroot of mounted docker image.
 
 Learn more about OSCAP_ARGUMENTS in `man oscap`.
 
-### Examplary usage
+### Exemplary usage
 
 Tested on Fedora host.
 
@@ -53,7 +53,7 @@ Tested on Fedora host.
 
 ### Scanning running container
 Similar to scanning image, just scanning the container. The result may differ
-(image vs containter) due to defined mount points.
+(image vs container) due to defined mount points.
 
 ### Vulnerability scan of all images
 
