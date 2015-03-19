@@ -9,7 +9,6 @@
 # along with this software; if not, see http://www.gnu.org/licenses/gpl.txt
 #
 
-set -x
 set -e -o pipefail
 
 function docker_mount_image(){
