@@ -11,8 +11,6 @@
 
 set -x
 set -e -o pipefail
-image_name=$1; shift
-oscap_arguments="$@"
 
 function docker_mount_image(){
 	local image_name=$1
@@ -48,8 +46,19 @@ function oscap_chroot(){
 	/usr/bin/oscap $oscap_arguments
 }
 
-image_root=`mktemp -d docker.XXXXXX`
+module=$1; shift
+case $module in
+*)
+	echo "docker-oscap image [image_name] oscap-arguments"
+	echo "	Scan a docker image. See man oscap to learn more about oscap-arguments"
+	;;
+image)
+	image_name=$1; shift
+	oscap_arguments="$@"
+	image_root=`mktemp -d docker.XXXXXX`
+	docker_mount_image $image_name $image_root
+	oscap_chroot $image_name $image_root $oscap_arguments
+	docker_umount_image $image_root
+	;;
+esac
 
-docker_mount_image $image_name $image_root
-oscap_chroot $image_name $image_root $oscap_arguments
-docker_umount_image $image_root

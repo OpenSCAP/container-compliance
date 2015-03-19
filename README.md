@@ -7,7 +7,7 @@ Resources and tools to assert compliance of containers (docker, rocket, ...).
 The very first use case is to run the offline scan of the container image.
 
   ```
-  # docker-oscap [image_name] [oscap_arguments]
+  # docker-oscap image [image_name] [oscap_arguments]
   ```
 
 ### Examplary usage
@@ -19,7 +19,7 @@ Tested on Fedora host.
   # sed -i 's/<platform idref=.*$//g' /usr/share/xml/scap/ssg/fedora/ssg-fedora-ds.xml
   # service docker start
   # docker pull fedora
-  # docker-oscap fedora xccdf eval \
+  # docker-oscap image fedora xccdf eval \
       --profile xccdf_org.ssgproject.content_profile_common \
       /usr/share/xml/scap/ssg/fedora/ssg-fedora-ds.xml
   ```
