@@ -58,7 +58,7 @@ Run OpenSCAP scan within chroot of mounted docker container. This may differ
 from scanning docker images dur to defined mount points.
 
   ```
-  # docker-oscap container CONTAINER_IMAGE [OSCAP_ARGUMENTS]
+  # docker-oscap container CONTAINER_NAME [OSCAP_ARGUMENTS]
   ```
 
 ## Future features
