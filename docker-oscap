@@ -67,14 +67,14 @@ function query_cpe_in_chroot(){
 }
 
 function cve_definitions_uri(){
-	local image=$1; shift
+	local name=$1; shift
 	local image_root=$1; shift
 	if query_cpe_in_chroot $image_root oval:org.open-scap.cpe.rhel:def:7 || \
 			query_cpe_in_chroot $image_root oval:org.open-scap.cpe.rhel:def:6 ||\
 			query_cpe_in_chroot $image_root oval:org.open-scap.cpe.rhel:def:5; then
 		echo "http://www.redhat.com/security/data/oval/com.redhat.rhsa-all.xml"
 	else
-		echo "Could not found CVE definitions for image: $image" >&2
+		echo "Could not found CVE definitions for: $name" >&2
 		return 1
 	fi
 }
@@ -106,13 +106,25 @@ container)
 	container_root=`docker_container_root $container_name`
 	oscap_chroot "image" $container_name $container_root $oscap_arguments
 	;;
+container-cve)
+	container_name=$1; shift
+	oscap_oval_eval_arguments="$@"
+	container_root=`docker_container_root $container_name`
+	cve_oval=`mktemp`
+	cve_definitions_uri=`cve_definitions_uri $container_name $container_root`
+	wget -O "$cve_oval" $cve_definitions_uri
+	oscap_chroot "container" $container_name $container_root oval eval $oscap_oval_eval_arguments $cve_oval
+	rm $cve_oval
+	;;
 *)
 	echo "docker-oscap image IMAGE-NAME OSCAP-ARGUMENTS"
 	echo "	Scan a docker image."
 	echo "docker-oscap image-cve IMAGE-NAME [--results oval-results-file.xml [--report report.html]]"
 	echo "	Scan a docker image for known vulnerabilities."
-	echo "docker-oscap container IMAGE-NAME OSCAP-ARGUMENTS"
+	echo "docker-oscap container CONTAINER-NAME OSCAP-ARGUMENTS"
 	echo "	Scan a running docker container of given name."
+	echo "docker-oscap container-cve CONTAINER-NAME [--results oval-results-file.xml [--report report.html]]"
+	echo "	Scan a running container for known vulnerabilities."
 	echo "See man oscap to learn more about OSCAP-ARGUMENTS"
 	;;
 esac
