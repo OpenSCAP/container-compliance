@@ -2,6 +2,9 @@
 
 Resources and tools to assert compliance of containers (docker, rocket, ...).
 
++ Assessing running containers and cold images
++ Vulnerability and compliance audit
+
 ## Vulnerability scan of Docker image
 
   ```
@@ -49,11 +52,16 @@ Tested on Fedora host.
       /usr/share/xml/scap/ssg/fedora/ssg-fedora-ds.xml
   ```
 
-## Future features
+## Scanning Docker container
 
-### Scanning running container
-Similar to scanning image, just scanning the container. The result may differ
-(image vs container) due to defined mount points.
+Run OpenSCAP scan within chroot of mounted docker container. This may differ
+from scanning docker images dur to defined mount points.
+
+  ```
+  # docker-oscap container CONTAINER_IMAGE [OSCAP_ARGUMENTS]
+  ```
+
+## Future features
 
 ### Vulnerability scan of all images
 
