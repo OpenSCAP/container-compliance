@@ -31,6 +31,19 @@ function docker_umount_image(){
 	rm -r $1
 }
 
+function docker_container_pid(){
+	local container_name="$1"
+	/usr/bin/docker inspect --format '{{.State.Pid}}' $container_name
+}
+
+function docker_container_root(){
+	local container_name="$1"
+	local pid=`docker_container_pid $container_name`
+	local root="/proc/$pid/root"
+	echo $root
+	test -d $root
+}
+
 function oscap_chroot(){
 	local image=$1; shift
 	local path=$1; shift
@@ -86,11 +99,20 @@ image-cve)
 	oscap_chroot $image_name $image_root oval eval $oscap_oval_eval_arguments $cve_oval
 	docker_umount_image $image_root
 	;;
+container)
+	container_name=$1; shift
+	oscap_arguments="$@"
+	container_root=`docker_container_root $container_name`
+	oscap_chroot $container_name $container_root $oscap_arguments
+	;;
 *)
 	echo "docker-oscap image [image_name] oscap-arguments"
-	echo "	Scan a docker image. See man oscap to learn more about oscap-arguments"
+	echo "	Scan a docker image."
 	echo "docker-oscap image-cve [image_name] [--results oval-results-file.xml [--report report.html]]"
 	echo "	Scan a docker image for known vulnerabilities."
+	echo "docker-oscap container CONTAINER_NAME OSCAP-ARGUMENTS"
+	echo "	Scan a running docker container of given name."
+	echo "See man oscap to learn more about OSCAP-ARGUMENTS"
 	;;
 esac
 
