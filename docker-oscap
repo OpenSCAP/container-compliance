@@ -45,6 +45,7 @@ function docker_container_root(){
 }
 
 function oscap_chroot(){
+	local target=$1; shift
 	local image=$1; shift
 	local path=$1; shift
 	local oscap_arguments="$@"
@@ -54,7 +55,7 @@ function oscap_chroot(){
 	export OSCAP_PROBE_OS_NAME="Linux"
 	export OSCAP_PROBE_OS_VERSION=`uname --kernel-release`
 	export OSCAP_PROBE_ARCHITECTURE=`uname --hardware-platform`
-	export OSCAP_PROBE_PRIMARY_HOST_NAME="docker-image-$image"
+	export OSCAP_PROBE_PRIMARY_HOST_NAME="docker-$target-$image"
 	/usr/bin/oscap $oscap_arguments
 }
 
@@ -62,7 +63,7 @@ function query_cpe_in_chroot(){
 	local image_root=$1; shift
 	local cpe=$1
 	local cpe_dict=/usr/share/openscap/cpe/openscap-cpe-oval.xml
-	oscap_chroot "image" $image_root oval eval --id $cpe $cpe_dict 2>&1 > /dev/null
+	oscap_chroot "image" "noname" $image_root oval eval --id $cpe $cpe_dict 2>&1 > /dev/null
 }
 
 function cve_definitions_uri(){
@@ -85,7 +86,7 @@ image)
 	oscap_arguments="$@"
 	image_root=`mktemp -d docker.XXXXXX`
 	docker_mount_image $image_name $image_root
-	oscap_chroot $image_name $image_root $oscap_arguments
+	oscap_chroot "image" $image_name $image_root $oscap_arguments
 	docker_umount_image $image_root
 	;;
 image-cve)
@@ -96,14 +97,14 @@ image-cve)
 	docker_mount_image $image_name $image_root
 	cve_definitions_uri=`cve_definitions_uri $image_name $image_root`
 	wget -O "$cve_oval" $cve_definitions_uri
-	oscap_chroot $image_name $image_root oval eval $oscap_oval_eval_arguments $cve_oval
+	oscap_chroot "image" $image_name $image_root oval eval $oscap_oval_eval_arguments $cve_oval
 	docker_umount_image $image_root
 	;;
 container)
 	container_name=$1; shift
 	oscap_arguments="$@"
 	container_root=`docker_container_root $container_name`
-	oscap_chroot $container_name $container_root $oscap_arguments
+	oscap_chroot "image" $container_name $container_root $oscap_arguments
 	;;
 *)
 	echo "docker-oscap image IMAGE-NAME OSCAP-ARGUMENTS"
