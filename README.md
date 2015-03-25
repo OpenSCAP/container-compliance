@@ -54,11 +54,21 @@ Tested on Fedora host.
 
 ## Scanning Docker container
 
-Run OpenSCAP scan within chroot of mounted docker container. This may differ
-from scanning docker images dur to defined mount points.
+Run OpenSCAP scan within chroot of running docker container. This may differ
+from scanning docker image due to defined mount points.
 
   ```
   # docker-oscap container CONTAINER_NAME [OSCAP_ARGUMENTS]
+  ```
+
+## Vulnerability scan of Docker container
+
+Run OpenSCAP scan within chroot of running docker container. This may differ
+from scanning docker image due to defined mount points.
+
+  ```
+  # docker-oscap container-cve CONTAINER_NAME \
+      [--results OVAL.XML [--report REPORT.HTML]]
   ```
 
 ## Future features
