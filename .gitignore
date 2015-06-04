@@ -1,0 +1,5 @@
+# Vagrant stuff
+.vagrant
+.vagrant.d
+*iso
+*box
