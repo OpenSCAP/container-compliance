@@ -3,3 +3,5 @@
 .vagrant.d
 *iso
 *box
+*.html
+*.xml

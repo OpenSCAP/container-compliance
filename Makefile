@@ -1,6 +1,6 @@
 .PHONY: build test all
 
-DOCKER_IMAGE_NAME=dduportal/oscap
+DOCKER_IMAGE_NAME=dduportal/oscap4docker
 
 all: build test
 
