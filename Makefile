@@ -9,7 +9,6 @@ build:
 
 test:
 	docker run \
-		--rm \
 		-v $(CURDIR):/app \
 		-v $$(which docker):$$(which docker) \
 		-v /var/run/docker.sock:/var/run/docker.sock \
