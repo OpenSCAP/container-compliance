@@ -16,7 +16,7 @@ function docker_mount_image(){
 	local target_dir=$2
 	local tmp=`mktemp -d docker.XXXXXX`
 	# -- 'docker mount' will be hopefully comming later to docker
-	/usr/bin/docker save $image_name | tar x --directory $tmp
+	docker save $image_name | tar x --directory $tmp
 	# layers now in the working directory
 	for layer in `find $tmp/* -maxdepth 1 -type d`; do
 		if tar tvf $layer/layer.tar | grep . > /dev/null; then
@@ -33,7 +33,7 @@ function docker_umount_image(){
 
 function docker_container_pid(){
 	local container_name="$1"
-	/usr/bin/docker inspect --format '{{.State.Pid}}' $container_name
+	docker inspect --format '{{.State.Pid}}' $container_name
 }
 
 function docker_container_root(){
@@ -56,7 +56,7 @@ function oscap_chroot(){
 	export OSCAP_PROBE_OS_VERSION=`uname --kernel-release`
 	export OSCAP_PROBE_ARCHITECTURE=`uname --hardware-platform`
 	export OSCAP_PROBE_PRIMARY_HOST_NAME="docker-$target-$image"
-	/usr/bin/oscap $oscap_arguments
+	oscap $oscap_arguments
 }
 
 function query_cpe_in_chroot(){
