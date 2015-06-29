@@ -18,8 +18,8 @@ OSCAP_VERSION=1.1.1
 	[ "${FOUND_OSCAP_VERSION}" == "${OSCAP_VERSION}" ]
 }
 
-@test "docker-oscap script is installed and available in the Path" { 
-	docker run --entrypoint sh "${DOCKER_IMAGE_NAME}" -c "which docker-oscap"
+@test "oscap-docker script is installed and available in the Path" {
+	docker run --entrypoint sh "${DOCKER_IMAGE_NAME}" -c "which oscap-docker"
 }
 
 WORKDIR_PATH="/data"

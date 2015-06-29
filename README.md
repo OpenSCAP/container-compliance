@@ -8,7 +8,7 @@ Resources and tools to assert compliance of containers (rocket, docker, ...).
 ## Vulnerability scan of Docker image
 
   ```
-  # docker-oscap image-cve IMAGE_NAME \
+  # oscap-docker image-cve IMAGE_NAME \
       [--results OVAL.XML [--report REPORT.HTML]]
   ```
 
@@ -23,7 +23,7 @@ Tested on Fedora host.
   # yum install openscap-scanner docker-io
   # service docker start
   # docker pull richxsl/rhel7
-  # docker-oscap image-cve richxsl/rhel7 \
+  # oscap-docker image-cve richxsl/rhel7 \
       --results oval.xml --report rhel7.html
   $ firefox rhel7.html
   ```
@@ -33,7 +33,7 @@ Tested on Fedora host.
 Run any OpenSCAP command within chroot of mounted docker image.
 
   ```
-  # docker-oscap image IMAGE_NAME [OSCAP_ARGUMENTS]
+  # oscap-docker image IMAGE_NAME [OSCAP_ARGUMENTS]
   ```
 
 Learn more about OSCAP_ARGUMENTS in `man oscap`.
@@ -47,7 +47,7 @@ Tested on Fedora host.
   # sed -i 's/<platform idref=.*$//g' /usr/share/xml/scap/ssg/fedora/ssg-fedora-ds.xml
   # service docker start
   # docker pull fedora
-  # docker-oscap image fedora xccdf eval \
+  # oscap-docker image fedora xccdf eval \
       --profile xccdf_org.ssgproject.content_profile_common \
       /usr/share/xml/scap/ssg/fedora/ssg-fedora-ds.xml
   ```
@@ -58,7 +58,7 @@ Run OpenSCAP scan within chroot of running docker container. This may differ
 from scanning docker image due to defined mount points.
 
   ```
-  # docker-oscap container CONTAINER_NAME [OSCAP_ARGUMENTS]
+  # oscap-docker container CONTAINER_NAME [OSCAP_ARGUMENTS]
   ```
 
 ## Vulnerability scan of Docker container
@@ -67,7 +67,7 @@ Run OpenSCAP scan within chroot of running docker container. This may differ
 from scanning docker image due to defined mount points.
 
   ```
-  # docker-oscap container-cve CONTAINER_NAME \
+  # oscap-docker container-cve CONTAINER_NAME \
       [--results OVAL.XML [--report REPORT.HTML]]
   ```
 
@@ -78,7 +78,7 @@ from scanning docker image due to defined mount points.
 The output of the tool could look like:
 
   ```
-  # docker-oscap cve --all --download --arf report-arf.xml
+  # oscap-docker cve --all --download --arf report-arf.xml
   Fetching OVAL definitions for RHSA ........ ok
   Inflating ....... ok
   Scanning rhel7-elasticsearch ...... ok (compliant, no CVE identified)
