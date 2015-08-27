@@ -22,8 +22,8 @@ Tested on Fedora host.
   ```
   # yum install openscap-scanner docker-io
   # service docker start
-  # docker pull richxsl/rhel7
-  # oscap-docker image-cve richxsl/rhel7 \
+  # docker pull docker.io/rhel7
+  # oscap-docker image-cve docker.io/rhel7 \
       --results oval.xml --report rhel7.html
   $ firefox rhel7.html
   ```
