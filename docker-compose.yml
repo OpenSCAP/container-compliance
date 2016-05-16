@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  oscap4docker:
+    build: ./
+    image: oscap4docker
+
+  oscap4docker-test:
+    build: ./tests/
+    command: /app/tests/bats/
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - .:/app
+      - /var/run/docker.sock:/var/run/docker.sock

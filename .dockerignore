@@ -1,0 +1,6 @@
+tests
+.git
+circle.yml
+docker-compose.yml
+Makefile
+*.md
