@@ -1,6 +1,7 @@
 version: '2'
 
 services:
+  
   oscap4docker:
     build: ./
     image: oscap4docker

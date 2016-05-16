@@ -1,0 +1,16 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  # Upgrade to the latest docker version
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" --only-upgrade -y install docker-engine
+  # reinstall docker-compose at latest version
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+script:
+  - make all

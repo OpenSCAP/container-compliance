@@ -5,6 +5,9 @@ Resources and tools to assert compliance of containers (rocket, docker, ...).
 + Assessing running containers and cold images
 + Vulnerability and compliance audit
 
+
+[![CircleCi Build Status](https://circleci.com/gh/dduportal/container-compliance.svg?&style=shield)](https://circleci.com/gh/dduportal/container-compliance)
+
 ## Vulnerability scan of Docker image
 
   ```
@@ -87,6 +90,10 @@ The output of the tool could look like:
   Exporting Asset Report ......... ok
   CVE Scan finished in 1m35s
   ```
+
+## Contribute ? Build yourself ?
+
+
 
 ## Copyright
 
