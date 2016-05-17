@@ -5,6 +5,8 @@ Resources and tools to assert compliance of containers (rocket, docker, ...).
 + Assessing running containers and cold images
 + Vulnerability and compliance audit
 
+[![Build Status](https://travis-ci.org/dduportal/container-compliance.svg?branch=master)](https://travis-ci.org/dduportal/container-compliance)
+
 ## Vulnerability scan of Docker image
 
   ```
@@ -87,6 +89,47 @@ The output of the tool could look like:
   Exporting Asset Report ......... ok
   CVE Scan finished in 1m35s
   ```
+
+## Contribute ? Build yourself ?
+
+### Requirements
+
+In order to build this image, you will need:
+
+- An host machine with `Docker` installed (see https://docs.docker.com/engine/installation/)
+
+- `Docker Compose` is also required (see https://docs.docker.com/compose/install/)
+
+- We use `GNU Make` as a workflow engine (see https://www.gnu.org/software/make/)
+
+### Basic workflow
+
+1. Fork this repository on Github
+2. Clone your forked version on your machine
+3. Within your command line, navigate to the root of this repository
+4. Just run one of these make targets:
+  - `make all`: to run the full workflow
+  - `make build`: just to build the Docker image
+  - `make test`: to launch testing of the docker image
+  - `make deploy`: to do nothing since it will run only in CI environment
+
+### Under the Hood
+
+* Make is used to express the lifecycle with its targets: `build`,
+`test`, `deploy`and `all`
+
+* Docker-Compose will describe the Docker options in a centralized  way:
+  - What are the instance parts of the build ?
+  - What to build ?
+  - What are the options to pass to docker (shared volumes, etc.)
+
+* Docker is used as a Linux instance hypervisor here: it is
+*ligthweight* isolation that helps to reproduces software behaviors
+across differents machines.
+
+* TravisCI is used for continuous Integration. If all tests are passing, then it will "deploy" by requesting the DockerHub to
+"autobuild" the image: providing full testing AND open Dockerfile.
+
 
 ## Copyright
 
