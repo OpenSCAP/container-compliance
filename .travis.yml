@@ -13,4 +13,9 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - make all
+  - make build && make test
+  - bash ./deploy.sh
+
+# deploy:
+#   provider: script
+#   script: deploy.sh
