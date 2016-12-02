@@ -1,3 +1,8 @@
+> # Obsolete!
+> This project is obsolete, the functionality is provided by the oscap-docker
+> tool that ships with OpenSCAP.
+
+
 # Container Compliance
 
 Resources and tools to assert compliance of containers (rocket, docker, ...).
